@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "my-countries-9d5d6": {
+      "hosting": {
+        "my-app": [
+          "my-countries-9d5d6"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "my-countries-9d5d6"
+  }
+}
