@@ -1,7 +1,7 @@
 {
   "hosting": [
     {
-      "target": "my-app",
+      "target": "my-countries",
       "source": ".",
       "frameworksBackend": {
         "region": "europe-west1"

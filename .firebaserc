@@ -2,7 +2,7 @@
   "targets": {
     "my-countries-9d5d6": {
       "hosting": {
-        "my-app": [
+        "my-countries": [
           "my-countries-9d5d6"
         ]
       }

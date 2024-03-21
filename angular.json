@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "my-app": {
+    "my-countries": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/my-app",
+            "outputPath": "dist/my-countries",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "my-app:build:production"
+              "buildTarget": "my-countries:build:production"
             },
             "development": {
-              "buildTarget": "my-app:build:development"
+              "buildTarget": "my-countries:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "my-app:build"
+            "buildTarget": "my-countries:build"
           }
         },
         "test": {
@@ -97,11 +97,11 @@
         "cypress-run": {
           "builder": "@cypress/schematic:cypress",
           "options": {
-            "devServerTarget": "my-app:serve"
+            "devServerTarget": "my-countries:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "my-app:serve:production"
+              "devServerTarget": "my-countries:serve:production"
             }
           }
         },
@@ -115,27 +115,27 @@
         "ct": {
           "builder": "@cypress/schematic:cypress",
           "options": {
-            "devServerTarget": "my-app:serve",
+            "devServerTarget": "my-countries:serve",
             "watch": true,
             "headless": false,
             "testingType": "component"
           },
           "configurations": {
             "development": {
-              "devServerTarget": "my-app:serve:development"
+              "devServerTarget": "my-countries:serve:development"
             }
           }
         },
         "e2e": {
           "builder": "@cypress/schematic:cypress",
           "options": {
-            "devServerTarget": "my-app:serve",
+            "devServerTarget": "my-countries:serve",
             "watch": true,
             "headless": false
           },
           "configurations": {
             "production": {
-              "devServerTarget": "my-app:serve:production"
+              "devServerTarget": "my-countries:serve:production"
             }
           }
         },
@@ -146,12 +146,12 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "my-app:build:production",
-              "serveTarget": "my-app:serve:production"
+              "buildTarget": "my-countries:build:production",
+              "serveTarget": "my-countries:serve:production"
             },
             "development": {
-              "buildTarget": "my-app:build:development",
-              "serveTarget": "my-app:serve:development"
+              "buildTarget": "my-countries:build:development",
+              "serveTarget": "my-countries:serve:development"
             }
           },
           "defaultConfiguration": "production"
