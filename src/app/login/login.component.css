@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+mat-card {
+  flex: 0.4;
+  padding: 1em;
+}
+
+mat-card-title {
+  padding-bottom: 1em;
+}
+
+mat-card-content {
+  display: flex;
+  justify-content: center;
+}

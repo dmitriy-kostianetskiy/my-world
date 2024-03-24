@@ -1,10 +1,5 @@
 <app-navbar></app-navbar>
 
 <main>
-  @defer {
-  <app-world-map [visitedCountries]="['Russia', 'France']"></app-world-map>
-  } @placeholder (minimum 500ms) {
-  <!-- TODO: add progress bar -->
-  <p>Placeholder content</p>
-  }
+  <router-outlet></router-outlet>
 </main>
