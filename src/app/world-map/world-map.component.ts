@@ -1,16 +1,26 @@
 import {
+  AfterRenderPhase,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
   Input,
+  OnChanges,
+  SimpleChanges,
   ViewChild,
   afterNextRender,
+  computed,
+  inject,
+  viewChild,
 } from '@angular/core';
 import * as d3 from 'd3';
-import * as world from './world.json';
+import { WorldService } from '../services/world.service';
+import { Country } from '../model/country';
 
 const WIDTH = 1000;
 const HEIGHT = 500;
+const STROKE_STYLE = 'black';
+const SELECTED_FILL_STYLE = 'green';
+const DEFAULT_FILL_STYLE = 'grey';
 
 @Component({
   selector: 'app-world-map',
@@ -18,32 +28,34 @@ const HEIGHT = 500;
   templateUrl: './world-map.component.html',
   styleUrl: './world-map.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [WorldService],
 })
-export class WorldMapComponent {
-  @ViewChild('worldMapSvg') worldMapCanvas!: ElementRef<SVGElement>;
+export class WorldMapComponent implements OnChanges {
+  private readonly worldService = inject(WorldService);
 
-  @Input() visitedCountries: string[] = [];
+  readonly allCountries = this.worldService.allCountries;
+
+  private readonly worldMapSvg =
+    viewChild<ElementRef<SVGElement>>('worldMapSvg');
+
+  @Input() selectedCountryIds: string[] = [];
 
   constructor() {
-    afterNextRender(() => {
-      this.render();
-    });
-  }
-
-  private render(): void {
-    // see for more details: https://d3-graph-gallery.com/backgroundmap
-    this.adjustSvg();
-
-    const projection = this.getProjection();
-
-    this.renderMap(projection);
-  }
-
-  private adjustSvg(): void {
-    this.worldMapCanvas.nativeElement.setAttribute(
-      'viewBox',
-      `0 0 ${WIDTH} ${HEIGHT}`
+    afterNextRender(
+      () => {
+        this.renderMap();
+        this.updateCountryColours();
+      },
+      {
+        phase: AfterRenderPhase.MixedReadWrite,
+      }
     );
+  }
+
+  ngOnChanges({ selectedCountryIds }: SimpleChanges): void {
+    if (selectedCountryIds && !selectedCountryIds.firstChange) {
+      this.updateCountryColours();
+    }
   }
 
   private getProjection(): d3.GeoProjection {
@@ -55,40 +67,42 @@ export class WorldMapComponent {
       .translate([WIDTH / 2, HEIGHT / 2]);
   }
 
-  private renderMap(projection: d3.GeoProjection): void {
-    const visitedCountriesSet = new Set(this.visitedCountries);
+  private renderMap(): void {
+    const svg = this.getSvgElement();
 
-    // render visited countries
-    const visited = world.features.filter((item) =>
-      visitedCountriesSet.has(item.properties.name)
-    );
-
-    this.renderCountries(projection, visited, 'green', 'black');
-
-    // render not visited countries
-    const notVisited = world.features.filter(
-      (item) => !visitedCountriesSet.has(item.properties.name)
-    );
-
-    this.renderCountries(projection, notVisited, 'grey', 'black');
-  }
-
-  private renderCountries(
-    projection: d3.GeoProjection,
-    features: unknown[],
-    fillStyle: string,
-    strokeStyle: string
-  ): void {
-    const svg = d3.select(this.worldMapCanvas.nativeElement);
+    const projection = this.getProjection();
 
     svg
+      .attr('viewBox', `0 0 ${WIDTH} ${HEIGHT}`)
       .append('g')
       .selectAll('path')
-      .data(features)
+      .data(this.allCountries)
       .enter()
       .append('path')
-      .attr('fill', fillStyle)
+      .attr('id', (a) => a.id)
       .attr('d', d3.geoPath().projection(projection) as any)
-      .style('stroke', strokeStyle);
+      .style('stroke', STROKE_STYLE);
+  }
+
+  private updateCountryColours(): void {
+    const svg = this.getSvgElement();
+
+    // reset fill for all
+    svg.selectAll('path').style('fill', DEFAULT_FILL_STYLE);
+
+    // set selected countries fill
+    this.selectedCountryIds.forEach((countryId) => {
+      svg.selectAll(`#${countryId}`).style('fill', SELECTED_FILL_STYLE);
+    });
+  }
+
+  private getSvgElement(): d3.Selection<SVGElement, unknown, null, undefined> {
+    const worldMapSvg = this.worldMapSvg();
+
+    if (!worldMapSvg?.nativeElement) {
+      throw new Error('Unable to find <svg>');
+    }
+
+    return d3.select(worldMapSvg.nativeElement);
   }
 }

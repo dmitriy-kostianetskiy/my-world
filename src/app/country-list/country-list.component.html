@@ -1,0 +1,11 @@
+<ul>
+  @for (country of allCountries; track country.id) {
+  <li>
+    <mat-checkbox
+      [checked]="isSelected(country.id)"
+      (change)="onCheckboxChange($event, country.id)"
+      >{{ country.properties.name }}</mat-checkbox
+    >
+  </li>
+  }
+</ul>
