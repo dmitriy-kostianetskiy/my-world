@@ -1,30 +1,46 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Auth } from '@angular/fire/auth';
 
-import { Firestore } from '@angular/fire/firestore';
+import { Firestore, doc, setDoc, docData } from '@angular/fire/firestore';
+import { from, map } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class MyCountriesService {
   private readonly firestore = inject(Firestore);
+  private readonly auth = inject(Auth);
 
-  private readonly rawSelectedCountries = signal<string[]>(['BRA']);
+  private readonly documentRef = doc(
+    this.firestore,
+    `my-countries/${this.auth.currentUser?.uid}`
+  ).withConverter<string[]>({
+    fromFirestore: (snapshot) => snapshot.get('selected') || [],
+    toFirestore: (input) => ({
+      selected: input || [],
+    }),
+  });
 
-  readonly selectedCountryIds = this.rawSelectedCountries.asReadonly();
-
-  has(countryId: string): boolean {
-    return this.rawSelectedCountries().includes(countryId);
-  }
+  readonly selectedCountryIds = toSignal(
+    docData(this.documentRef).pipe(map((data) => data || []))
+  );
 
   add(countryId: string) {
-    this.rawSelectedCountries.update((value) => [
-      ...new Set([...value, countryId]),
-    ]);
+    const newValue = [
+      ...new Set([...(this.selectedCountryIds() || []), countryId]),
+    ];
+
+    return this.save(newValue);
   }
 
   remove(countryId: string) {
-    this.rawSelectedCountries.update((value) =>
-      value.filter((item) => item !== countryId)
+    const newValue = (this.selectedCountryIds() || []).filter(
+      (item) => item !== countryId
     );
+
+    return this.save(newValue);
+  }
+
+  private save(selected: string[]) {
+    return from(setDoc(this.documentRef, selected));
   }
 }

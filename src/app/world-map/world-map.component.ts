@@ -35,7 +35,7 @@ export class WorldMapComponent implements OnChanges {
   private readonly worldMapSvg =
     viewChild<ElementRef<SVGElement>>('worldMapSvg');
 
-  @Input() selectedCountryIds: string[] = [];
+  @Input() selectedCountryIds?: string[] = [];
 
   constructor() {
     afterNextRender(
@@ -88,7 +88,7 @@ export class WorldMapComponent implements OnChanges {
     svg.selectAll('path').style('fill', DEFAULT_FILL_STYLE);
 
     // set selected countries fill
-    this.selectedCountryIds.forEach((countryId) => {
+    this.selectedCountryIds?.forEach((countryId) => {
       svg.selectAll(`#${countryId}`).style('fill', SELECTED_FILL_STYLE);
     });
   }

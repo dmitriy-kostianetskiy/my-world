@@ -25,13 +25,13 @@ export class CountryListComponent {
 
   readonly allCountries = this.worldService.allCountries;
 
-  @Input() selectedCountryIds: string[] = [];
+  @Input() selectedCountryIds?: string[] = [];
 
   @Output() addCountry = new EventEmitter<string>();
   @Output() removeCountry = new EventEmitter<string>();
 
   isSelected(countryId: string) {
-    return this.selectedCountryIds.includes(countryId);
+    return this.selectedCountryIds?.includes(countryId);
   }
 
   onCheckboxChange(event: MatCheckboxChange, countryId: string) {
