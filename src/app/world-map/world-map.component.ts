@@ -6,15 +6,12 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
-  ViewChild,
   afterNextRender,
-  computed,
   inject,
   viewChild,
 } from '@angular/core';
 import * as d3 from 'd3';
 import { WorldService } from '../services/world.service';
-import { Country } from '../model/country';
 
 const WIDTH = 1000;
 const HEIGHT = 500;

@@ -1,11 +1,13 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 
-import { Country } from '../model/country';
+import { Firestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MyCountriesService {
+  private readonly firestore = inject(Firestore);
+
   private readonly rawSelectedCountries = signal<string[]>(['BRA']);
 
   readonly selectedCountryIds = this.rawSelectedCountries.asReadonly();

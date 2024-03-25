@@ -11,7 +11,6 @@ import {
   MatCheckboxModule,
 } from '@angular/material/checkbox';
 import { WorldService } from '../services/world.service';
-import { Country } from '../model/country';
 
 @Component({
   selector: 'app-country-list',
