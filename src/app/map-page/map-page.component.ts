@@ -6,11 +6,11 @@ import { SidenavStore } from '../store/sidenav.store';
 import { CountrySelectorContainerComponent } from '../country-selector-container/country-selector-container.component';
 
 @Component({
-  selector: 'app-countries',
+  selector: 'app-map-page',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './countries.component.html',
-  styleUrl: './countries.component.css',
+  templateUrl: './map-page.component.html',
+  styleUrl: './map-page.component.css',
   imports: [
     WorldMapComponent,
     CountrySelectorContainerComponent,
@@ -18,7 +18,7 @@ import { CountrySelectorContainerComponent } from '../country-selector-container
   ],
   providers: [CountriesService],
 })
-export class CountriesComponent {
+export class MapPageComponent {
   private readonly sidenavStore = inject(SidenavStore);
   private readonly countriesService = inject(CountriesService);
 
