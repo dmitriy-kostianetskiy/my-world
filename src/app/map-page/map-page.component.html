@@ -13,5 +13,8 @@
 
   <section class="countries">
     <app-world-map [selectedCountries]="selectedCountries()"></app-world-map>
+    <app-statistics
+      [numberOfSelectedCountries]="numberOfSelectedCountries()"
+    ></app-statistics>
   </section>
 </mat-sidenav-container>

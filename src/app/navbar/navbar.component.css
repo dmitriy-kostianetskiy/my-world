@@ -10,3 +10,7 @@ mat-toolbar {
 .avatar {
   border-radius: 90%;
 }
+
+.title {
+  text-transform: uppercase;
+}

@@ -1,4 +1,4 @@
-import { DestroyRef, Injectable, inject } from '@angular/core';
+import { DestroyRef, Injectable, computed, inject } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 
 import { Firestore, doc, setDoc, docData } from '@angular/fire/firestore';
@@ -20,6 +20,10 @@ export class CountriesService {
   readonly selectedCountries = toSignal(this.selectedCountries$, {
     initialValue: [],
   });
+
+  readonly numberOfSelectedCountries = computed(
+    () => this.selectedCountries()?.length || 0
+  );
 
   set(selectedCountries: string[]): Subscription {
     return from(setDoc(this.documentRef, selectedCountries))

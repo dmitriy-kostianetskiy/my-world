@@ -1,0 +1,24 @@
+<mat-card>
+  <mat-card-content>
+    <div class="row">
+      <div class="col">
+        <h1>{{ numberOfSelectedCountries }}</h1>
+        <p class="mat-caption">Visited</p>
+      </div>
+      <div class="col">
+        <h1>{{ percentageOfVisited | percent }}</h1>
+      </div>
+      <div class="col">
+        <h1>{{ moreToGo }}</h1>
+        <p class="mat-caption">More to go</p>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-footer>
+    <mat-progress-bar
+      mode="determinate"
+      [value]="percentageOfVisited * 100"
+    ></mat-progress-bar>
+  </mat-card-footer>
+</mat-card>

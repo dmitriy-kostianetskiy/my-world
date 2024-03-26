@@ -4,6 +4,7 @@ import { CountriesService } from './countries.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidenavStore } from '../store/sidenav.store';
 import { CountrySelectorContainerComponent } from '../country-selector-container/country-selector-container.component';
+import { StatisticsComponent } from '../statistics/statistics.component';
 
 @Component({
   selector: 'app-map-page',
@@ -12,9 +13,10 @@ import { CountrySelectorContainerComponent } from '../country-selector-container
   templateUrl: './map-page.component.html',
   styleUrl: './map-page.component.css',
   imports: [
+    MatSidenavModule,
     WorldMapComponent,
     CountrySelectorContainerComponent,
-    MatSidenavModule,
+    StatisticsComponent,
   ],
   providers: [CountriesService],
 })
@@ -24,6 +26,8 @@ export class MapPageComponent {
 
   readonly sidenavOpened = this.sidenavStore.opened;
   readonly selectedCountries = this.countriesService.selectedCountries;
+  readonly numberOfSelectedCountries =
+    this.countriesService.numberOfSelectedCountries;
 
   onSelectedCountriesChange(value: string[]): void {
     this.countriesService.set(value);
