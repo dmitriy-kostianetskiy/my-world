@@ -11,3 +11,8 @@
 .sidenav-container {
   height: 100%;
 }
+
+mat-sidenav {
+  min-width: 400px;
+  padding: 1em;
+}

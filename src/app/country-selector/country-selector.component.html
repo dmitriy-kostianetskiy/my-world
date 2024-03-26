@@ -1,5 +1,5 @@
 <ul>
-  @for (country of allCountries; track country.id) {
+  @for (country of countries; track country.id) {
   <li>
     <mat-checkbox
       [checked]="isCheckboxChecked(country.id)"
@@ -7,5 +7,7 @@
       >{{ country.properties.name }}</mat-checkbox
     >
   </li>
+  } @empty {
+  <li>No results</li>
   }
 </ul>

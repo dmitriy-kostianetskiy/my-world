@@ -1,20 +1,15 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
   EventEmitter,
   Input,
   Output,
-  computed,
-  inject,
 } from '@angular/core';
 import {
   MatCheckboxChange,
   MatCheckboxModule,
 } from '@angular/material/checkbox';
-import { WorldService } from '../services/world.service';
-import { MyCountriesService } from '../services/my-countries.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Country } from '../model/country';
 
 @Component({
   selector: 'app-country-selector',
@@ -25,10 +20,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   imports: [MatCheckboxModule],
 })
 export class CountrySelectorComponent {
-  private readonly worldService = inject(WorldService);
-
-  readonly allCountries = this.worldService.allCountries;
-
+  @Input() countries?: Country[] = [];
   @Input() selectedCountryIds?: string[] = [];
 
   @Output() addCountry = new EventEmitter<string>();
