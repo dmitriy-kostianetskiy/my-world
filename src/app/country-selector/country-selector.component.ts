@@ -2,9 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
-  EventEmitter,
-  Input,
-  Output,
   computed,
   inject,
 } from '@angular/core';
@@ -17,14 +14,14 @@ import { MyCountriesService } from '../services/my-countries.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'app-country-list',
+  selector: 'app-country-selector',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './country-list.component.html',
-  styleUrl: './country-list.component.css',
+  templateUrl: './country-selector.component.html',
+  styleUrl: './country-selector.component.css',
   imports: [MatCheckboxModule],
 })
-export class CountryListComponent {
+export class CountrySelectorComponent {
   private readonly destroyRef = inject(DestroyRef);
   private readonly worldService = inject(WorldService);
   private readonly myCountriesService = inject(MyCountriesService);

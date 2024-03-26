@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { WorldMapComponent } from '../world-map/world-map.component';
-import { CountryListComponent } from '../country-list/country-list.component';
+import { CountrySelectorComponent } from '../country-selector/country-selector.component';
 import { MyCountriesService } from '../services/my-countries.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidenavService } from '../services/sidenav.service';
@@ -11,7 +11,7 @@ import { SidenavService } from '../services/sidenav.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './countries.component.html',
   styleUrl: './countries.component.css',
-  imports: [WorldMapComponent, CountryListComponent, MatSidenavModule],
+  imports: [WorldMapComponent, CountrySelectorComponent, MatSidenavModule],
   providers: [MyCountriesService],
 })
 export class CountriesComponent {
