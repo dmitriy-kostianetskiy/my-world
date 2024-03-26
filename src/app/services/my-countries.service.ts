@@ -1,12 +1,13 @@
-import { Injectable, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { DestroyRef, Injectable, inject } from '@angular/core';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { Auth } from '@angular/fire/auth';
 
 import { Firestore, doc, setDoc, docData } from '@angular/fire/firestore';
-import { Observable, from, map } from 'rxjs';
+import { Observable, Subscription, from, map } from 'rxjs';
 
 @Injectable()
 export class MyCountriesService {
+  private readonly destroyRef = inject(DestroyRef);
   private readonly firestore = inject(Firestore);
   private readonly auth = inject(Auth);
 
@@ -24,7 +25,7 @@ export class MyCountriesService {
     docData(this.documentRef).pipe(map((data) => data || []))
   );
 
-  add(countryId: string): Observable<void> {
+  add(countryId: string): Subscription {
     const newValue = [
       ...new Set([...(this.selectedCountryIds() || []), countryId]),
     ];
@@ -32,7 +33,7 @@ export class MyCountriesService {
     return this.save(newValue);
   }
 
-  remove(countryId: string): Observable<void> {
+  remove(countryId: string): Subscription {
     const newValue = (this.selectedCountryIds() || []).filter(
       (item) => item !== countryId
     );
@@ -40,7 +41,9 @@ export class MyCountriesService {
     return this.save(newValue);
   }
 
-  private save(selected: string[]): Observable<void> {
-    return from(setDoc(this.documentRef, selected));
+  private save(selected: string[]): Subscription {
+    return from(setDoc(this.documentRef, selected))
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
   }
 }

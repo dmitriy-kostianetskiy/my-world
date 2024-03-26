@@ -1,11 +1,15 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav mode="side" position="end" [opened]="sidenavOpened()">
-    <app-country-selector></app-country-selector>
+    <app-country-selector
+      [selectedCountryIds]="selectedCountryIds()"
+      (addCountry)="onAddCountry($event)"
+      (removeCountry)="onRemoveCountry($event)"
+    ></app-country-selector>
   </mat-sidenav>
 
   <section class="countries">
     @defer {
-    <app-world-map></app-world-map>
+    <app-world-map [selectedCountryIds]="selectedCountryIds()"></app-world-map>
     } @placeholder (minimum 500ms) {
     <!-- TODO: add progress bar -->
     <p>Placeholder content</p>

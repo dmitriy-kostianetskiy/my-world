@@ -16,6 +16,16 @@ import { SidenavService } from '../services/sidenav.service';
 })
 export class CountriesComponent {
   private readonly sidenavService = inject(SidenavService);
+  private readonly myCountriesService = inject(MyCountriesService);
 
   readonly sidenavOpened = this.sidenavService.opened;
+  readonly selectedCountryIds = this.myCountriesService.selectedCountryIds;
+
+  onRemoveCountry(countryId: string): void {
+    this.myCountriesService.remove(countryId);
+  }
+
+  onAddCountry(countryId: string): void {
+    this.myCountriesService.add(countryId);
+  }
 }

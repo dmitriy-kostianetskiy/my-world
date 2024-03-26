@@ -2,6 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
+  EventEmitter,
+  Input,
+  Output,
   computed,
   inject,
 } from '@angular/core';
@@ -22,39 +25,24 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   imports: [MatCheckboxModule],
 })
 export class CountrySelectorComponent {
-  private readonly destroyRef = inject(DestroyRef);
   private readonly worldService = inject(WorldService);
-  private readonly myCountriesService = inject(MyCountriesService);
 
   readonly allCountries = this.worldService.allCountries;
 
-  readonly selectedCountriesSet = computed(
-    () => new Set(this.myCountriesService.selectedCountryIds())
-  );
+  @Input() selectedCountryIds?: string[] = [];
+
+  @Output() addCountry = new EventEmitter<string>();
+  @Output() removeCountry = new EventEmitter<string>();
 
   isCheckboxChecked(countryId: string) {
-    return this.selectedCountriesSet().has(countryId);
+    return this.selectedCountryIds?.includes(countryId);
   }
 
   onCheckboxChange({ checked }: MatCheckboxChange, countryId: string): void {
     if (checked) {
-      this.removeCountry(countryId);
+      this.addCountry.emit(countryId);
     } else {
-      this.addCountry(countryId);
+      this.removeCountry.emit(countryId);
     }
-  }
-
-  private removeCountry(countryId: string): void {
-    this.myCountriesService
-      .remove(countryId)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
-  }
-
-  private addCountry(countryId: string): void {
-    this.myCountriesService
-      .add(countryId)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
   }
 }
