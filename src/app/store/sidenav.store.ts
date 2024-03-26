@@ -29,7 +29,7 @@ export const SidenavStore = signalStore(
   })),
   withHooks({
     onInit: (store, authService = inject(AuthService)) => {
-      authService.isLoggedIn$.pipe(takeUntilDestroyed()).subscribe({
+      authService.authState$.pipe(takeUntilDestroyed()).subscribe({
         next: () => {
           patchState(store, () => ({ opened: false }));
         },

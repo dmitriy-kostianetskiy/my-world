@@ -33,7 +33,9 @@ export const appConfig: ApplicationConfig = {
       )
     ),
     importProvidersFrom(provideAuth(() => getAuth())),
+    importProvidersFrom(provideAnalytics(() => getAnalytics())),
     importProvidersFrom(provideFirestore(() => getFirestore())),
+    importProvidersFrom(provideFunctions(() => getFunctions())),
     importProvidersFrom(
       provideFirebaseApp(() =>
         initializeApp({
@@ -47,13 +49,8 @@ export const appConfig: ApplicationConfig = {
         })
       )
     ),
-    importProvidersFrom(provideAuth(() => getAuth())),
-    importProvidersFrom(provideAnalytics(() => getAnalytics())),
     ScreenTrackingService,
     UserTrackingService,
-    importProvidersFrom(provideFirestore(() => getFirestore())),
-    importProvidersFrom(provideFunctions(() => getFunctions())),
-    provideAnimationsAsync(),
     provideAnimationsAsync(),
   ],
 };

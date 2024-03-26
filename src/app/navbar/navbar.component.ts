@@ -28,7 +28,7 @@ export class NavbarComponent {
   private readonly authService = inject(AuthService);
   private readonly sidenavStore = inject(SidenavStore);
 
-  readonly userName = this.authService.name;
+  readonly userName = this.authService.displayName;
   readonly photoUrl = this.authService.photoUrl;
 
   readonly isLoggedIn = this.authService.isLoggedIn;
