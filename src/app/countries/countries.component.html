@@ -1,5 +1,10 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav mode="side" position="end" [opened]="sidenavOpened()">
+  <mat-sidenav
+    mode="over"
+    position="end"
+    [opened]="sidenavOpened()"
+    (openedChange)="onSidenavOpenedChanged($event)"
+  >
     <app-country-selector-container
       [selectedCountries]="selectedCountries()"
       (selectedCountriesChange)="onSelectedCountriesChange($event)"

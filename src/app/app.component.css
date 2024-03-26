@@ -3,7 +3,7 @@
 }
 
 main {
-  height: 100%;
+  height: calc(100% - 4rem);
   margin: auto;
   padding-top: 4rem;
 }

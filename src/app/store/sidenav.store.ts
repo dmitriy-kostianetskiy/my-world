@@ -26,6 +26,9 @@ export const SidenavStore = signalStore(
     toggle(): void {
       patchState(store, (state) => ({ opened: !state.opened }));
     },
+    set(opened: boolean): void {
+      patchState(store, (state) => ({ opened }));
+    },
   })),
   withHooks({
     onInit: (store, authService = inject(AuthService)) => {

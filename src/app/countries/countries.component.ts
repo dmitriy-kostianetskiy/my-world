@@ -28,4 +28,8 @@ export class CountriesComponent {
   onSelectedCountriesChange(value: string[]): void {
     this.countriesService.set(value);
   }
+
+  onSidenavOpenedChanged(value: boolean): void {
+    this.sidenavStore.set(value);
+  }
 }
