@@ -21,6 +21,8 @@ export class AuthService {
 
   readonly user = toSignal(this.user$, { initialValue: null });
   readonly uid = computed(() => this.user()?.uid);
+  readonly photoUrl = computed(() => this.user()?.photoURL);
+  readonly name = computed(() => this.user()?.displayName);
   readonly isLoggedIn = toSignal(this.isLoggedIn$);
 
   signIn(): Observable<UserCredential> {

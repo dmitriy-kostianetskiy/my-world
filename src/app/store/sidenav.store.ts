@@ -22,9 +22,6 @@ const initialState: SidenavState = {
 export const SidenavStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withComputed(({}, authService = inject(AuthService)) => ({
-    canOpen: authService.isLoggedIn,
-  })),
   withMethods((store) => ({
     toggle(): void {
       patchState(store, (state) => ({ opened: !state.opened }));

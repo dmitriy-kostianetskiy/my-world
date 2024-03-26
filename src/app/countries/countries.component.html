@@ -7,11 +7,6 @@
   </mat-sidenav>
 
   <section class="countries">
-    @defer {
     <app-world-map [selectedCountries]="selectedCountries()"></app-world-map>
-    } @placeholder (minimum 500ms) {
-    <!-- TODO: add progress bar -->
-    <p>Placeholder content</p>
-    }
   </section>
 </mat-sidenav-container>

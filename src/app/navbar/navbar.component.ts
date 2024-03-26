@@ -7,13 +7,14 @@ import {
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthService } from '../services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { SidenavStore } from '../store/sidenav.store';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-navbar',
@@ -21,7 +22,13 @@ import { SidenavStore } from '../store/sidenav.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatMenuModule],
+  imports: [
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatMenuModule,
+  ],
 })
 export class NavbarComponent {
   private readonly destroyRef = inject(DestroyRef);
@@ -29,9 +36,10 @@ export class NavbarComponent {
   private readonly authService = inject(AuthService);
   private readonly sidenavStore = inject(SidenavStore);
 
-  readonly userName = computed(() => this.authService.user()?.displayName);
+  readonly userName = this.authService.name;
+  readonly photoUrl = this.authService.photoUrl;
 
-  readonly canOpenSidenav = this.sidenavStore.canOpen;
+  readonly isLoggedIn = this.authService.isLoggedIn;
 
   onSignOutClick(): void {
     this.authService
