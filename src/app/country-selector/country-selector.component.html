@@ -6,6 +6,11 @@
     [ngModel]="searchTerm"
     (ngModelChange)="onSearchTermChange($event)"
   />
+  @if (searchTerm) {
+  <button matSuffix mat-icon-button (click)="onSearchTermChange('')">
+    <mat-icon>close</mat-icon>
+  </button>
+  }
 </mat-form-field>
 
 <ul>

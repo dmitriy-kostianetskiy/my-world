@@ -12,6 +12,8 @@ import {
 import { Country } from '../model/country';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-country-selector',
@@ -19,7 +21,13 @@ import { FormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './country-selector.component.html',
   styleUrl: './country-selector.component.css',
-  imports: [MatCheckboxModule, MatInputModule, FormsModule],
+  imports: [
+    MatCheckboxModule,
+    MatInputModule,
+    FormsModule,
+    MatIconModule,
+    MatButtonModule,
+  ],
 })
 export class CountrySelectorComponent {
   @Input() searchTerm: string = '';

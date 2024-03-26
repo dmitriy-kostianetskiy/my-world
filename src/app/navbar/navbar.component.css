@@ -8,6 +8,5 @@ mat-toolbar {
 }
 
 .avatar {
-  margin-bottom: 0;
-  margin-right: 4px;
+  border-radius: 90%;
 }

@@ -1,15 +1,19 @@
 <mat-toolbar color="primary">
+  <button mat-icon-button>
+    <img class="avatar" src="/assets/globe.png" />
+  </button>
   <span>My Countries</span>
   <span class="spacer"></span>
 
   @if (isLoggedIn()) {
   <button mat-icon-button [matMenuTriggerFor]="menu" [title]="userName()">
-    <img [src]="photoUrl()" />
+    <img class="avatar" [src]="photoUrl()" [alt]="userName()" />
   </button>
 
   <button mat-icon-button (click)="onToggleSidenavClick()">
     <mat-icon>add_location</mat-icon>
   </button>
+
   <button mat-icon-button (click)="onSignOutClick()">
     <mat-icon>logout</mat-icon>
   </button>

@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
-  computed,
   inject,
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +12,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { SidenavStore } from '../store/sidenav.store';
-import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
@@ -22,13 +20,7 @@ import { MatMenuModule } from '@angular/material/menu';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
-  imports: [
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatMenuModule,
-  ],
+  imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatMenuModule],
 })
 export class NavbarComponent {
   private readonly destroyRef = inject(DestroyRef);
