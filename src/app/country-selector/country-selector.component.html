@@ -1,3 +1,13 @@
+<mat-form-field class="search">
+  <mat-label>Search</mat-label>
+  <input
+    matInput
+    placeholder="Russia"
+    [ngModel]="searchTerm"
+    (ngModelChange)="onSearchTermChange($event)"
+  />
+</mat-form-field>
+
 <ul>
   @for (country of countries; track country.id) {
   <li>

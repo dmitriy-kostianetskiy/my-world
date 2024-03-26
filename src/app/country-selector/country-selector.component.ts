@@ -10,6 +10,8 @@ import {
   MatCheckboxModule,
 } from '@angular/material/checkbox';
 import { Country } from '../model/country';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-country-selector',
@@ -17,24 +19,29 @@ import { Country } from '../model/country';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './country-selector.component.html',
   styleUrl: './country-selector.component.css',
-  imports: [MatCheckboxModule],
+  imports: [MatCheckboxModule, MatInputModule, FormsModule],
 })
 export class CountrySelectorComponent {
-  @Input() countries?: Country[] = [];
-  @Input() selectedCountryIds?: string[] = [];
+  @Input() searchTerm: string = '';
+  @Input() countries: Country[] = [];
+  @Input() selectedCountries: string[] = [];
 
-  @Output() addCountry = new EventEmitter<string>();
-  @Output() removeCountry = new EventEmitter<string>();
+  @Output() selectedCountriesChange = new EventEmitter<string[]>();
+  @Output() searchTermChange = new EventEmitter<string>();
 
   isCheckboxChecked(countryId: string) {
-    return this.selectedCountryIds?.includes(countryId);
+    return this.selectedCountries?.includes(countryId);
   }
 
   onCheckboxChange({ checked }: MatCheckboxChange, countryId: string): void {
-    if (checked) {
-      this.addCountry.emit(countryId);
-    } else {
-      this.removeCountry.emit(countryId);
-    }
+    const newValue = checked
+      ? [...this.selectedCountries, countryId]
+      : this.selectedCountries.filter((item) => item !== countryId);
+
+    this.selectedCountriesChange.emit(newValue);
+  }
+
+  onSearchTermChange(value: string): void {
+    this.searchTermChange.emit(value);
   }
 }

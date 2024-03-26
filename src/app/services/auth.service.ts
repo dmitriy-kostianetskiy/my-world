@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, computed, inject } from '@angular/core';
 import {
   Auth,
   user,
@@ -19,7 +19,8 @@ export class AuthService {
   readonly user$ = user(this.auth);
   readonly isLoggedIn$ = this.user$.pipe(map(Boolean));
 
-  readonly user = toSignal(this.user$);
+  readonly user = toSignal(this.user$, { initialValue: null });
+  readonly uid = computed(() => this.user()?.uid);
   readonly isLoggedIn = toSignal(this.isLoggedIn$);
 
   signIn(): Observable<UserCredential> {

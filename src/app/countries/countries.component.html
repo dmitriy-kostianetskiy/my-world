@@ -1,20 +1,14 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav mode="side" position="end" [opened]="sidenavOpened()">
-    <app-country-selector-search-box
-      [searchTerm]="searchTerm()"
-      (searchTermChange)="onSearchTermChange($event)"
-    ></app-country-selector-search-box>
-    <app-country-selector
-      [countries]="countries()"
-      [selectedCountryIds]="selectedCountryIds()"
-      (addCountry)="onAddCountry($event)"
-      (removeCountry)="onRemoveCountry($event)"
-    ></app-country-selector>
+    <app-country-selector-container
+      [selectedCountries]="selectedCountries()"
+      (selectedCountriesChange)="onSelectedCountriesChange($event)"
+    ></app-country-selector-container>
   </mat-sidenav>
 
   <section class="countries">
     @defer {
-    <app-world-map [selectedCountryIds]="selectedCountryIds()"></app-world-map>
+    <app-world-map [selectedCountries]="selectedCountries()"></app-world-map>
     } @placeholder (minimum 500ms) {
     <!-- TODO: add progress bar -->
     <p>Placeholder content</p>

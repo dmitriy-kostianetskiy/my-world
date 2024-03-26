@@ -11,7 +11,7 @@ import {
   viewChild,
 } from '@angular/core';
 import * as d3 from 'd3';
-import { WorldService } from '../services/world.service';
+import { WORLD } from '../world';
 
 const WIDTH = 1000;
 const HEIGHT = 500;
@@ -25,15 +25,12 @@ const DEFAULT_FILL_STYLE = 'grey';
   templateUrl: './world-map.component.html',
   styleUrl: './world-map.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [WorldService],
 })
 export class WorldMapComponent implements OnChanges {
-  private readonly worldService = inject(WorldService);
-
   private readonly worldMapSvg =
     viewChild<ElementRef<SVGElement>>('worldMapSvg');
 
-  @Input() selectedCountryIds?: string[] = [];
+  @Input() selectedCountries: string[] = [];
 
   constructor() {
     afterNextRender(
@@ -47,8 +44,8 @@ export class WorldMapComponent implements OnChanges {
     );
   }
 
-  ngOnChanges({ selectedCountryIds }: SimpleChanges): void {
-    if (selectedCountryIds && !selectedCountryIds.firstChange) {
+  ngOnChanges({ selectedCountries }: SimpleChanges): void {
+    if (selectedCountries && !selectedCountries.firstChange) {
       this.updateCountryColours();
     }
   }
@@ -71,7 +68,7 @@ export class WorldMapComponent implements OnChanges {
       .attr('viewBox', `0 0 ${WIDTH} ${HEIGHT}`)
       .append('g')
       .selectAll('path')
-      .data(this.worldService.allCountries)
+      .data(WORLD)
       .enter()
       .append('path')
       .attr('id', (item) => item.id)
@@ -86,7 +83,7 @@ export class WorldMapComponent implements OnChanges {
     svg.selectAll('path').style('fill', DEFAULT_FILL_STYLE);
 
     // set selected countries fill
-    this.selectedCountryIds?.forEach((countryId) => {
+    this.selectedCountries?.forEach((countryId) => {
       svg.selectAll(`#${countryId}`).style('fill', SELECTED_FILL_STYLE);
     });
   }

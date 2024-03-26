@@ -1,0 +1,7 @@
+<app-country-selector
+  [searchTerm]="searchTerm()"
+  [countries]="searchResults()"
+  [selectedCountries]="selectedCountries"
+  (searchTermChange)="onSearchTermChange($event)"
+  (selectedCountriesChange)="onSelectedCountriesChange($event)"
+></app-country-selector>
