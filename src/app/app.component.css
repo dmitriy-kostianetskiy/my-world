@@ -1,11 +1,9 @@
 :host {
-  display: block;
-  width: 100%;
+  height: 100%;
 }
 
 main {
-  display: block;
-  width: 80%;
+  height: 100%;
   margin: auto;
-  padding-top: 1em;
+  padding-top: 4rem;
 }

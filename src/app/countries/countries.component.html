@@ -1,11 +1,14 @@
-@defer {
-<app-world-map [selectedCountryIds]="selectedCountryIds()"></app-world-map>
-<app-country-list
-  [selectedCountryIds]="selectedCountryIds()"
-  (addCountry)="onAddCountry($event)"
-  (removeCountry)="onRemoveCountry($event)"
-></app-country-list>
-} @placeholder (minimum 500ms) {
-<!-- TODO: add progress bar -->
-<p>Placeholder content</p>
-}
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav mode="side" position="end" [opened]="sidenavOpened()">
+    <app-country-list></app-country-list>
+  </mat-sidenav>
+
+  <section class="countries">
+    @defer {
+    <app-world-map></app-world-map>
+    } @placeholder (minimum 500ms) {
+    <!-- TODO: add progress bar -->
+    <p>Placeholder content</p>
+    }
+  </section>
+</mat-sidenav-container>

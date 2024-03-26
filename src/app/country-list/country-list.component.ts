@@ -1,9 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   Output,
+  computed,
   inject,
 } from '@angular/core';
 import {
@@ -11,6 +13,8 @@ import {
   MatCheckboxModule,
 } from '@angular/material/checkbox';
 import { WorldService } from '../services/world.service';
+import { MyCountriesService } from '../services/my-countries.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-country-list',
@@ -21,24 +25,39 @@ import { WorldService } from '../services/world.service';
   imports: [MatCheckboxModule],
 })
 export class CountryListComponent {
+  private readonly destroyRef = inject(DestroyRef);
   private readonly worldService = inject(WorldService);
+  private readonly myCountriesService = inject(MyCountriesService);
 
   readonly allCountries = this.worldService.allCountries;
 
-  @Input() selectedCountryIds?: string[] = [];
+  readonly selectedCountriesSet = computed(
+    () => new Set(this.myCountriesService.selectedCountryIds())
+  );
 
-  @Output() addCountry = new EventEmitter<string>();
-  @Output() removeCountry = new EventEmitter<string>();
-
-  isSelected(countryId: string) {
-    return this.selectedCountryIds?.includes(countryId);
+  isCheckboxChecked(countryId: string) {
+    return this.selectedCountriesSet().has(countryId);
   }
 
-  onCheckboxChange(event: MatCheckboxChange, countryId: string) {
-    if (event.checked) {
-      this.addCountry.emit(countryId);
+  onCheckboxChange({ checked }: MatCheckboxChange, countryId: string): void {
+    if (checked) {
+      this.removeCountry(countryId);
     } else {
-      this.removeCountry.emit(countryId);
+      this.addCountry(countryId);
     }
+  }
+
+  private removeCountry(countryId: string): void {
+    this.myCountriesService
+      .remove(countryId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
+  }
+
+  private addCountry(countryId: string): void {
+    this.myCountriesService
+      .add(countryId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
   }
 }

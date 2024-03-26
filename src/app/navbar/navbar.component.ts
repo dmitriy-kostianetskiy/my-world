@@ -13,6 +13,7 @@ import { AuthService } from '../services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs';
+import { SidenavService } from '../services/sidenav.service';
 
 @Component({
   selector: 'app-navbar',
@@ -26,8 +27,11 @@ export class NavbarComponent {
   private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
+  private readonly sidenavService = inject(SidenavService);
 
   readonly userName = computed(() => this.authService.user()?.displayName);
+
+  readonly canOpenSidenav = this.sidenavService.canOpen;
 
   onSignOutClick(): void {
     this.authService
@@ -37,5 +41,9 @@ export class NavbarComponent {
         switchMap(() => this.router.navigate(['login']))
       )
       .subscribe();
+  }
+
+  onToggleSidenavClick(): void {
+    this.sidenavService.toggle();
   }
 }

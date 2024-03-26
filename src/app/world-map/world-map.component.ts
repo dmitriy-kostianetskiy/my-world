@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import * as d3 from 'd3';
 import { WorldService } from '../services/world.service';
+import { MyCountriesService } from '../services/my-countries.service';
 
 const WIDTH = 1000;
 const HEIGHT = 500;
@@ -29,13 +30,10 @@ const DEFAULT_FILL_STYLE = 'grey';
 })
 export class WorldMapComponent implements OnChanges {
   private readonly worldService = inject(WorldService);
-
-  readonly allCountries = this.worldService.allCountries;
+  private readonly myCountriesService = inject(MyCountriesService);
 
   private readonly worldMapSvg =
     viewChild<ElementRef<SVGElement>>('worldMapSvg');
-
-  @Input() selectedCountryIds?: string[] = [];
 
   constructor() {
     afterNextRender(
@@ -73,10 +71,10 @@ export class WorldMapComponent implements OnChanges {
       .attr('viewBox', `0 0 ${WIDTH} ${HEIGHT}`)
       .append('g')
       .selectAll('path')
-      .data(this.allCountries)
+      .data(this.worldService.allCountries)
       .enter()
       .append('path')
-      .attr('id', (a) => a.id)
+      .attr('id', (item) => item.id)
       .attr('d', d3.geoPath().projection(projection) as any)
       .style('stroke', STROKE_STYLE);
   }
@@ -88,7 +86,7 @@ export class WorldMapComponent implements OnChanges {
     svg.selectAll('path').style('fill', DEFAULT_FILL_STYLE);
 
     // set selected countries fill
-    this.selectedCountryIds?.forEach((countryId) => {
+    this.myCountriesService.selectedCountryIds()?.forEach((countryId) => {
       svg.selectAll(`#${countryId}`).style('fill', SELECTED_FILL_STYLE);
     });
   }

@@ -1,7 +1,6 @@
-import { Injectable, computed, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   Auth,
-  authState,
   user,
   signInWithPopup,
   GoogleAuthProvider,
@@ -9,7 +8,7 @@ import {
   signOut,
 } from '@angular/fire/auth';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Observable, from, map, throwError } from 'rxjs';
+import { Observable, from, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +20,7 @@ export class AuthService {
   readonly isLoggedIn$ = this.user$.pipe(map(Boolean));
 
   readonly user = toSignal(this.user$);
+  readonly isLoggedIn = toSignal(this.isLoggedIn$);
 
   signIn(): Observable<UserCredential> {
     return from(signInWithPopup(this.auth, new GoogleAuthProvider()));

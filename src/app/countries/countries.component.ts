@@ -2,7 +2,8 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { WorldMapComponent } from '../world-map/world-map.component';
 import { CountryListComponent } from '../country-list/country-list.component';
 import { MyCountriesService } from '../services/my-countries.service';
-import { take } from 'cypress/types/lodash';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { SidenavService } from '../services/sidenav.service';
 
 @Component({
   selector: 'app-countries',
@@ -10,19 +11,11 @@ import { take } from 'cypress/types/lodash';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './countries.component.html',
   styleUrl: './countries.component.css',
-  imports: [WorldMapComponent, CountryListComponent],
+  imports: [WorldMapComponent, CountryListComponent, MatSidenavModule],
   providers: [MyCountriesService],
 })
 export class CountriesComponent {
-  private readonly myCountriesService = inject(MyCountriesService);
+  private readonly sidenavService = inject(SidenavService);
 
-  readonly selectedCountryIds = this.myCountriesService.selectedCountryIds;
-
-  onRemoveCountry(countryId: string): void {
-    this.myCountriesService.remove(countryId).pipe().subscribe({});
-  }
-
-  onAddCountry(countryId: string): void {
-    this.myCountriesService.add(countryId).pipe().subscribe({});
-  }
+  readonly sidenavOpened = this.sidenavService.opened;
 }

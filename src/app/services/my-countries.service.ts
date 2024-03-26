@@ -3,7 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { Auth } from '@angular/fire/auth';
 
 import { Firestore, doc, setDoc, docData } from '@angular/fire/firestore';
-import { from, map } from 'rxjs';
+import { Observable, from, map } from 'rxjs';
 
 @Injectable()
 export class MyCountriesService {
@@ -24,7 +24,7 @@ export class MyCountriesService {
     docData(this.documentRef).pipe(map((data) => data || []))
   );
 
-  add(countryId: string) {
+  add(countryId: string): Observable<void> {
     const newValue = [
       ...new Set([...(this.selectedCountryIds() || []), countryId]),
     ];
@@ -32,7 +32,7 @@ export class MyCountriesService {
     return this.save(newValue);
   }
 
-  remove(countryId: string) {
+  remove(countryId: string): Observable<void> {
     const newValue = (this.selectedCountryIds() || []).filter(
       (item) => item !== countryId
     );
@@ -40,7 +40,7 @@ export class MyCountriesService {
     return this.save(newValue);
   }
 
-  private save(selected: string[]) {
+  private save(selected: string[]): Observable<void> {
     return from(setDoc(this.documentRef, selected));
   }
 }

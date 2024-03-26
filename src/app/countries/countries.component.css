@@ -1,0 +1,13 @@
+:host {
+  height: 100%;
+}
+
+.countries {
+  display: block;
+  width: 80%;
+  margin: auto;
+}
+
+.sidenav-container {
+  height: 100%;
+}
