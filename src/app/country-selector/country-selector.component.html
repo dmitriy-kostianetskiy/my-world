@@ -1,11 +1,6 @@
 <mat-form-field class="search">
   <mat-label>Search</mat-label>
-  <input
-    matInput
-    placeholder="Russia"
-    [ngModel]="searchTerm"
-    (ngModelChange)="onSearchTermChange($event)"
-  />
+  <input matInput placeholder="Russia" [ngModel]="searchTerm" (ngModelChange)="onSearchTermChange($event)" />
   @if (searchTerm) {
   <button matSuffix mat-icon-button (click)="onSearchTermChange('')">
     <mat-icon>close</mat-icon>
@@ -16,11 +11,9 @@
 <ul>
   @for (country of countries; track country.id) {
   <li>
-    <mat-checkbox
-      [checked]="isCheckboxChecked(country.id)"
-      (change)="onCheckboxChange($event, country.id)"
-      >{{ country.properties.name }}</mat-checkbox
-    >
+    <mat-checkbox [checked]="isCheckboxChecked(country.id)" (change)="onCheckboxChange($event, country.id)">{{
+      country.properties.name
+    }}</mat-checkbox>
   </li>
   } @empty {
   <li>No results</li>

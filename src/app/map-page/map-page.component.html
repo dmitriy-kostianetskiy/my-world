@@ -1,10 +1,5 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav
-    mode="over"
-    position="end"
-    [opened]="sidenavOpened()"
-    (openedChange)="onSidenavOpenedChanged($event)"
-  >
+  <mat-sidenav mode="over" position="end" [opened]="sidenavOpened()" (openedChange)="onSidenavOpenedChanged($event)">
     <app-country-selector-container
       [selectedCountries]="selectedCountries()"
       (selectedCountriesChange)="onSelectedCountriesChange($event)"
@@ -13,8 +8,6 @@
 
   <section class="countries">
     <app-world-map [selectedCountries]="selectedCountries()"></app-world-map>
-    <app-statistics
-      [numberOfSelectedCountries]="numberOfSelectedCountries()"
-    ></app-statistics>
+    <app-statistics [numberOfSelectedCountries]="numberOfSelectedCountries()"></app-statistics>
   </section>
 </mat-sidenav-container>

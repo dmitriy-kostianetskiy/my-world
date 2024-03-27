@@ -12,12 +12,7 @@ import { StatisticsComponent } from '../statistics/statistics.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './map-page.component.html',
   styleUrl: './map-page.component.css',
-  imports: [
-    MatSidenavModule,
-    WorldMapComponent,
-    CountrySelectorContainerComponent,
-    StatisticsComponent,
-  ],
+  imports: [MatSidenavModule, WorldMapComponent, CountrySelectorContainerComponent, StatisticsComponent],
   providers: [CountriesService],
 })
 export class MapPageComponent {
@@ -26,8 +21,7 @@ export class MapPageComponent {
 
   readonly sidenavOpened = this.sidenavStore.opened;
   readonly selectedCountries = this.countriesService.selectedCountries;
-  readonly numberOfSelectedCountries =
-    this.countriesService.numberOfSelectedCountries;
+  readonly numberOfSelectedCountries = this.countriesService.numberOfSelectedCountries;
 
   onSelectedCountriesChange(value: string[]): void {
     this.countriesService.set(value);

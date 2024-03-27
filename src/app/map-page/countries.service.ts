@@ -13,22 +13,16 @@ export class CountriesService {
 
   private readonly documentRef = this.createDocumentRef(this.authService.uid());
 
-  readonly selectedCountries$ = docData(this.documentRef).pipe(
-    map((data) => data || [])
-  );
+  readonly selectedCountries$ = docData(this.documentRef).pipe(map(data => data || []));
 
   readonly selectedCountries = toSignal(this.selectedCountries$, {
     initialValue: [],
   });
 
-  readonly numberOfSelectedCountries = computed(
-    () => this.selectedCountries()?.length || 0
-  );
+  readonly numberOfSelectedCountries = computed(() => this.selectedCountries()?.length || 0);
 
   set(selectedCountries: string[]): Subscription {
-    return from(setDoc(this.documentRef, selectedCountries))
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
+    return from(setDoc(this.documentRef, selectedCountries)).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 
   private createDocumentRef(uid: string | undefined) {
@@ -37,8 +31,8 @@ export class CountriesService {
     }
 
     return doc(this.firestore, `my-countries/${uid}`).withConverter<string[]>({
-      fromFirestore: (snapshot) => snapshot.get('selected') || [],
-      toFirestore: (input) => ({
+      fromFirestore: snapshot => snapshot.get('selected') || [],
+      toFirestore: input => ({
         selected: input || [],
       }),
     });

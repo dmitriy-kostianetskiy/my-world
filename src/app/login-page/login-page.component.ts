@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  inject,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -36,7 +30,7 @@ export class LoginPageComponent {
       .pipe(
         take(1),
         takeUntilDestroyed(this.destroyRef),
-        switchMap(() => this.router.navigate(['']))
+        switchMap(() => this.router.navigate([''])),
       )
       .subscribe({
         error: () => {

@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -38,7 +33,7 @@ export class NavbarComponent {
       .signOut()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        switchMap(() => this.router.navigate(['login']))
+        switchMap(() => this.router.navigate(['login'])),
       )
       .subscribe();
   }

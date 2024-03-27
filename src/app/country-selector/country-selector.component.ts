@@ -1,14 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
-import {
-  MatCheckboxChange,
-  MatCheckboxModule,
-} from '@angular/material/checkbox';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { Country } from '../model/country';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
@@ -21,13 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './country-selector.component.html',
   styleUrl: './country-selector.component.css',
-  imports: [
-    MatCheckboxModule,
-    MatInputModule,
-    FormsModule,
-    MatIconModule,
-    MatButtonModule,
-  ],
+  imports: [MatCheckboxModule, MatInputModule, FormsModule, MatIconModule, MatButtonModule],
 })
 export class CountrySelectorComponent {
   @Input() searchTerm: string = '';
@@ -44,7 +29,7 @@ export class CountrySelectorComponent {
   onCheckboxChange({ checked }: MatCheckboxChange, countryId: string): void {
     const newValue = checked
       ? [...this.selectedCountries, countryId]
-      : this.selectedCountries.filter((item) => item !== countryId);
+      : this.selectedCountries.filter(item => item !== countryId);
 
     this.selectedCountriesChange.emit(newValue);
   }

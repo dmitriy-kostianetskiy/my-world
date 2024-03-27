@@ -6,12 +6,7 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import {
-  getAnalytics,
-  provideAnalytics,
-  ScreenTrackingService,
-  UserTrackingService,
-} from '@angular/fire/analytics';
+import { getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,8 +22,8 @@ export const appConfig: ApplicationConfig = {
           authDomain: 'my-countries-9d5d6.firebaseapp.com',
           messagingSenderId: '855610291049',
           measurementId: 'G-PKHGRRG2X3',
-        })
-      )
+        }),
+      ),
     ),
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideAnalytics(() => getAnalytics())),
@@ -43,8 +38,8 @@ export const appConfig: ApplicationConfig = {
           authDomain: 'my-countries-9d5d6.firebaseapp.com',
           messagingSenderId: '855610291049',
           measurementId: 'G-PKHGRRG2X3',
-        })
-      )
+        }),
+      ),
     ),
     ScreenTrackingService,
     UserTrackingService,
