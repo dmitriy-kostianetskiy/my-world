@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import { LoginPageComponent } from './login-page/login-page.component';
-import { MapPageComponent } from './map-page/map-page.component';
 import {
   canActivate,
   redirectLoggedInTo,
@@ -15,12 +13,16 @@ export const routes: Routes = [
   },
   {
     path: 'map',
-    component: MapPageComponent,
+    loadComponent: () =>
+      import('./map-page/map-page.component').then((m) => m.MapPageComponent),
     ...canActivate(() => redirectUnauthorizedTo(['login'])),
   },
   {
     path: 'login',
-    component: LoginPageComponent,
+    loadComponent: () =>
+      import('./login-page/login-page.component').then(
+        (m) => m.LoginPageComponent
+      ),
     ...canActivate(() => redirectLoggedInTo([''])),
   },
   { path: '**', redirectTo: '/' }, // Wildcard route for a 404 page

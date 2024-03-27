@@ -12,8 +12,6 @@ import {
   ScreenTrackingService,
   UserTrackingService,
 } from '@angular/fire/analytics';
-import { getFunctions, provideFunctions } from '@angular/fire/functions';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -35,7 +33,6 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideAnalytics(() => getAnalytics())),
     importProvidersFrom(provideFirestore(() => getFirestore())),
-    importProvidersFrom(provideFunctions(() => getFunctions())),
     importProvidersFrom(
       provideFirebaseApp(() =>
         initializeApp({
@@ -51,6 +48,5 @@ export const appConfig: ApplicationConfig = {
     ),
     ScreenTrackingService,
     UserTrackingService,
-    provideAnimationsAsync(),
   ],
 };
