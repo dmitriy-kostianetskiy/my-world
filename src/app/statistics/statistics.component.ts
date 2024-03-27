@@ -24,4 +24,8 @@ export class StatisticsComponent {
   get moreToGo() {
     return TOTAL_COUNTRIES - this.numberOfSelectedCountries;
   }
+
+  get progress() {
+    return this.percentageOfVisited * 100;
+  }
 }

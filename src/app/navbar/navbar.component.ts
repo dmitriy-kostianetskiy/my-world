@@ -1,10 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AuthStore } from '../store/auth.store';
-import { Router } from '@angular/router';
-import { SidenavStore } from '../store/sidenav.store';
 import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
@@ -16,21 +13,18 @@ import { MatMenuModule } from '@angular/material/menu';
   imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatMenuModule],
 })
 export class NavbarComponent {
-  private readonly router = inject(Router);
-  private readonly authStore = inject(AuthStore);
-  private readonly sidenavStore = inject(SidenavStore);
+  @Input() isLoggedIn?: boolean | null;
+  @Input() photoUrl?: string | null;
+  @Input() userName?: string | null;
 
-  readonly userName = this.authStore.displayName;
-  readonly photoUrl = this.authStore.photoUrl;
-
-  readonly isLoggedIn = this.authStore.isLoggedIn;
-
-  async onSignOutClick() {
-    await this.authStore.signOut();
-    await this.router.navigate(['login']);
-  }
+  @Output() toggleSidenav = new EventEmitter();
+  @Output() signOut = new EventEmitter();
 
   onToggleSidenavClick(): void {
-    this.sidenavStore.toggle();
+    this.toggleSidenav.emit();
+  }
+
+  onSignOutClick(): void {
+    this.signOut.emit();
   }
 }

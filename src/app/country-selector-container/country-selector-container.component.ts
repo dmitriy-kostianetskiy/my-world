@@ -7,7 +7,6 @@ import { CountriesSelectorStore } from './countries-selector.store';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './country-selector-container.component.html',
-  styleUrl: './country-selector-container.component.css',
   imports: [CountrySelectorComponent],
   providers: [CountriesSelectorStore],
 })

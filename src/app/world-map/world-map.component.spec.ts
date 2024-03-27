@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { WorldMapComponent } from './world-map.component';
 
-describe('AppComponent', () => {
+describe('WorldMapComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [WorldMapComponent],

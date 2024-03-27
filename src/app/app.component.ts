@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarContainerComponent } from './navbar-container/navbar-container.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterOutlet, NavbarComponent],
+  imports: [RouterOutlet, NavbarContainerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
