@@ -1,8 +1,7 @@
-import { inject } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { effect, inject } from '@angular/core';
+import { AuthStore } from './auth.store';
 
 import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 type SidenavState = {
   opened: boolean;
@@ -24,12 +23,15 @@ export const SidenavStore = signalStore(
     },
   })),
   withHooks({
-    onInit: (store, authService = inject(AuthService)) => {
-      authService.authState$.pipe(takeUntilDestroyed()).subscribe({
-        next: () => {
+    onInit: (store, authStore = inject(AuthStore)) => {
+      effect(
+        () => {
+          authStore.authState();
+
           patchState(store, () => ({ opened: false }));
         },
-      });
+        { allowSignalWrites: true },
+      );
     },
   }),
 );

@@ -2,9 +2,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService } from '../services/auth.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { switchMap, take } from 'rxjs';
+import { AuthStore } from '../store/auth.store';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,26 +16,19 @@ import { Router } from '@angular/router';
 export class LoginPageComponent {
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly authService = inject(AuthService);
+  private readonly authStore = inject(AuthStore);
 
   readonly disabled = signal(false);
 
-  onSignInWithGoogleClick(): void {
-    this.disabled.set(true);
+  async onSignInWithGoogleClick() {
+    try {
+      this.disabled.set(true);
 
-    this.authService
-      .signIn()
-      .pipe(
-        take(1),
-        takeUntilDestroyed(this.destroyRef),
-        switchMap(() => this.router.navigate([''])),
-      )
-      .subscribe({
-        error: () => {
-          alert('Unable to login');
+      await this.authStore.singInWithGoogle();
 
-          this.disabled.set(false);
-        },
-      });
+      await this.router.navigate(['']);
+    } finally {
+      this.disabled.set(false);
+    }
   }
 }

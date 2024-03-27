@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { WorldMapComponent } from '../world-map/world-map.component';
-import { CountriesService } from './countries.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidenavStore } from '../store/sidenav.store';
 import { CountrySelectorContainerComponent } from '../country-selector-container/country-selector-container.component';
 import { StatisticsComponent } from '../statistics/statistics.component';
+import { MapStore } from './map.store';
 
 @Component({
   selector: 'app-map-page',
@@ -13,18 +13,18 @@ import { StatisticsComponent } from '../statistics/statistics.component';
   templateUrl: './map-page.component.html',
   styleUrl: './map-page.component.css',
   imports: [MatSidenavModule, WorldMapComponent, CountrySelectorContainerComponent, StatisticsComponent],
-  providers: [CountriesService],
+  providers: [MapStore],
 })
 export class MapPageComponent {
   private readonly sidenavStore = inject(SidenavStore);
-  private readonly countriesService = inject(CountriesService);
+  private readonly mapStore = inject(MapStore);
 
   readonly sidenavOpened = this.sidenavStore.opened;
-  readonly selectedCountries = this.countriesService.selectedCountries;
-  readonly numberOfSelectedCountries = this.countriesService.numberOfSelectedCountries;
+  readonly selectedCountries = this.mapStore.selected;
+  readonly numberOfSelectedCountries = this.mapStore.total;
 
   onSelectedCountriesChange(value: string[]): void {
-    this.countriesService.set(value);
+    this.mapStore.set(value);
   }
 
   onSidenavOpenedChanged(value: boolean): void {

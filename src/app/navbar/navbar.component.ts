@@ -1,11 +1,9 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AuthService } from '../services/auth.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AuthStore } from '../store/auth.store';
 import { Router } from '@angular/router';
-import { switchMap } from 'rxjs';
 import { SidenavStore } from '../store/sidenav.store';
 import { MatMenuModule } from '@angular/material/menu';
 
@@ -18,24 +16,18 @@ import { MatMenuModule } from '@angular/material/menu';
   imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatMenuModule],
 })
 export class NavbarComponent {
-  private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
-  private readonly authService = inject(AuthService);
+  private readonly authStore = inject(AuthStore);
   private readonly sidenavStore = inject(SidenavStore);
 
-  readonly userName = this.authService.displayName;
-  readonly photoUrl = this.authService.photoUrl;
+  readonly userName = this.authStore.displayName;
+  readonly photoUrl = this.authStore.photoUrl;
 
-  readonly isLoggedIn = this.authService.isLoggedIn;
+  readonly isLoggedIn = this.authStore.isLoggedIn;
 
-  onSignOutClick(): void {
-    this.authService
-      .signOut()
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        switchMap(() => this.router.navigate(['login'])),
-      )
-      .subscribe();
+  async onSignOutClick() {
+    await this.authStore.signOut();
+    await this.router.navigate(['login']);
   }
 
   onToggleSidenavClick(): void {
