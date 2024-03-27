@@ -3,7 +3,7 @@
 }
 
 main {
-  height: calc(100% - 4rem);
+  height: calc(100% - var(--mat-toolbar-mobile-height));
   margin: auto;
-  padding-top: 4rem;
+  padding-top: var(--mat-toolbar-mobile-height);
 }

@@ -1,13 +1,19 @@
 :host {
   height: 100%;
-  padding-top: 1em;
 }
 
-.countries {
+.map {
   display: block;
   width: 80%;
-  height: 100%;
+  height: calc(100% - 1rem);
   margin: auto;
+  padding-top: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .map {
+    width: 100%;
+  }
 }
 
 .sidenav-container {
