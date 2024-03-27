@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "prettier": "prettier --write \"**/*.{js,json,css,scss,less,md,ts,html,component.html}\"",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
@@ -44,6 +45,7 @@
     "@angular/cli": "^17.3.1",
     "@angular/compiler-cli": "^17.3.0",
     "@cypress/schematic": "^2.5.1",
+    "@schuchard/prettier": "^5.1.0",
     "@types/d3": "^7.4.3",
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
@@ -52,12 +54,26 @@
     "@typescript-eslint/parser": "7.2.0",
     "cypress": "latest",
     "eslint": "^8.57.0",
+    "husky": "latest",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "lint-staged": "latest",
+    "prettier": "latest",
+    "tslint-config-prettier": "latest",
     "typescript": "~5.4.2"
+  },
+  "husky": {
+      "hooks": {
+        "pre-commit": "lint-staged"
+      }
+    },
+    "lint-staged": {
+      "*.{js,json,css,scss,less,md,ts,html,component.html}": [
+        "prettier --write"
+      ]
+    }
   }
-}
