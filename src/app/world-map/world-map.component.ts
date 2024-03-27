@@ -7,7 +7,6 @@ import {
   OnChanges,
   SimpleChanges,
   afterNextRender,
-  inject,
   viewChild,
 } from '@angular/core';
 import * as d3 from 'd3';
@@ -27,8 +26,7 @@ const DEFAULT_FILL_STYLE = 'grey';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WorldMapComponent implements OnChanges {
-  private readonly worldMapSvg =
-    viewChild<ElementRef<SVGElement>>('worldMapSvg');
+  private readonly worldMapSvg = viewChild<ElementRef<SVGElement>>('worldMapSvg');
 
   @Input() selectedCountries: string[] = [];
 
@@ -40,7 +38,7 @@ export class WorldMapComponent implements OnChanges {
       },
       {
         phase: AfterRenderPhase.MixedReadWrite,
-      }
+      },
     );
   }
 
@@ -71,8 +69,8 @@ export class WorldMapComponent implements OnChanges {
       .data(WORLD)
       .enter()
       .append('path')
-      .attr('id', (item) => item.id)
-      .attr('d', d3.geoPath().projection(projection) as any)
+      .attr('id', item => item.id)
+      .attr('d', d3.geoPath().projection(projection))
       .style('stroke', STROKE_STYLE);
   }
 
@@ -83,7 +81,7 @@ export class WorldMapComponent implements OnChanges {
     svg.selectAll('path').style('fill', DEFAULT_FILL_STYLE);
 
     // set selected countries fill
-    this.selectedCountries?.forEach((countryId) => {
+    this.selectedCountries?.forEach(countryId => {
       svg.selectAll(`#${countryId}`).style('fill', SELECTED_FILL_STYLE);
     });
   }

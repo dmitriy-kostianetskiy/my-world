@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <button mat-icon-button>
-    <img class="avatar" src="/assets/globe.png" />
+    <img src="/assets/globe.png" alt="logo" />
   </button>
   <span class="title">My Countries</span>
   <span class="spacer"></span>
@@ -22,7 +22,5 @@
 
 <mat-menu #menu="matMenu">
   <button mat-menu-item>{{ userName() }}</button>
-  <button mat-menu-item (click)="onSignOutClick()">
-    <mat-icon>logout</mat-icon> Sign out
-  </button>
+  <button mat-menu-item (click)="onSignOutClick()"><mat-icon>logout</mat-icon> Sign out</button>
 </mat-menu>

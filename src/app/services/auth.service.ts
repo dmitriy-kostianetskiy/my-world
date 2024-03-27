@@ -7,10 +7,9 @@ import {
   UserCredential,
   signOut,
   authState,
-  reauthenticateWithPopup,
 } from '@angular/fire/auth';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Observable, Subject, from, map } from 'rxjs';
+import { Observable, from, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
