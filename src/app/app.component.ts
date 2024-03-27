@@ -11,5 +11,5 @@ import { NavbarContainerComponent } from './navbar-container/navbar-container.co
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'My Countries';
+  title = 'My World';
 }

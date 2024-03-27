@@ -11,6 +11,7 @@ describe('WorldMapComponent', () => {
   it('should create the app', () => {
     const fixture = TestBed.createComponent(WorldMapComponent);
     const app = fixture.componentInstance;
+
     expect(app).toBeTruthy();
   });
 });
