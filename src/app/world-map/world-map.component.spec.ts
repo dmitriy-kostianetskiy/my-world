@@ -1,17 +1,32 @@
-import { TestBed } from '@angular/core/testing';
+import { render, screen } from '@testing-library/angular';
 import { WorldMapComponent } from './world-map.component';
 
-describe('WorldMapComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [WorldMapComponent],
-    }).compileComponents();
+describe('AppComponent', () => {
+  test('should render all countries grey', async () => {
+    // Arrange
+    await render(WorldMapComponent, {});
+
+    // Assert
+    const elements = screen.queryAllByTestId(/country-path-.*/);
+
+    elements.forEach(element => {
+      expect(element).toHaveStyle({
+        fill: 'grey',
+      });
+    });
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(WorldMapComponent);
-    const app = fixture.componentInstance;
+  test('should render selected countries green', async () => {
+    // Arrange
+    await render(WorldMapComponent, {
+      componentInputs: {
+        selectedCountries: ['RUS'],
+      },
+    });
 
-    expect(app).toBeTruthy();
+    // Assert
+    expect(screen.getByTestId('country-path-RUS')).toHaveStyle({
+      fill: 'green',
+    });
   });
 });

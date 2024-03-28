@@ -10,6 +10,4 @@ import { NavbarContainerComponent } from './navbar-container/navbar-container.co
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
-  title = 'My World';
-}
+export class AppComponent {}

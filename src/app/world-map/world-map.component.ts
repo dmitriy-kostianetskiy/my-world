@@ -1,12 +1,11 @@
 import {
-  AfterRenderPhase,
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
   Input,
   OnChanges,
   SimpleChanges,
-  afterNextRender,
   viewChild,
 } from '@angular/core';
 import * as d3 from 'd3';
@@ -25,21 +24,14 @@ const DEFAULT_FILL_STYLE = 'grey';
   styleUrl: './world-map.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WorldMapComponent implements OnChanges {
+export class WorldMapComponent implements OnChanges, AfterViewInit {
   private readonly worldMapSvg = viewChild<ElementRef<SVGElement>>('worldMapSvg');
 
   @Input() selectedCountries: string[] = [];
 
-  constructor() {
-    afterNextRender(
-      () => {
-        this.renderMap();
-        this.updateCountryColours();
-      },
-      {
-        phase: AfterRenderPhase.MixedReadWrite,
-      },
-    );
+  ngAfterViewInit(): void {
+    this.renderMap();
+    this.updateCountryColours();
   }
 
   ngOnChanges({ selectedCountries }: SimpleChanges): void {
@@ -70,6 +62,7 @@ export class WorldMapComponent implements OnChanges {
       .enter()
       .append('path')
       .attr('id', item => item.id)
+      .attr('data-testid', item => `country-path-${item.id}`)
       .attr('d', d3.geoPath().projection(projection))
       .style('stroke', STROKE_STYLE);
   }

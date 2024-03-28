@@ -1,16 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { render, screen } from '@testing-library/angular';
 import { NavbarContainerComponent } from './navbar-container.component';
-import { AuthStore } from '../store/auth.store';
 import { signal } from '@angular/core';
 import { SidenavStore } from '../store/sidenav.store';
+import { AuthStore } from '../store/auth.store';
 
 describe('NavbarContainerComponent', () => {
-  let component: NavbarContainerComponent;
-  let fixture: ComponentFixture<NavbarContainerComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  test('should render component without a crash', async () => {
+    await render(NavbarContainerComponent, {
       providers: [
         {
           provide: AuthStore,
@@ -27,15 +23,8 @@ describe('NavbarContainerComponent', () => {
           },
         },
       ],
-      imports: [NavbarContainerComponent],
-    }).compileComponents();
+    });
 
-    fixture = TestBed.createComponent(NavbarContainerComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(screen).toBeDefined();
   });
 });

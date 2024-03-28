@@ -6,8 +6,8 @@
   <span class="spacer"></span>
 
   @if (isLoggedIn) {
-  <button mat-icon-button [matMenuTriggerFor]="menu" [title]="userName">
-    <img class="avatar" [src]="photoUrl" [alt]="userName" />
+  <button data-testid="avatar-button" mat-icon-button [matMenuTriggerFor]="menu" [title]="userName">
+    <img data-testid="avatar" class="avatar" [src]="photoUrl" [alt]="userName" />
   </button>
 
   <button mat-icon-button (click)="onToggleSidenavClick()">

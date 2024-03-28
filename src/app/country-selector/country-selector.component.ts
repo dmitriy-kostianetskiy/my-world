@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
-import { Country } from '../model/country';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { CountrySelectorItem } from '../country-selector-container/countries-selector.store';
 
 @Component({
   selector: 'app-country-selector',
@@ -16,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class CountrySelectorComponent {
   @Input() searchTerm: string = '';
-  @Input() countries: Country[] = [];
+  @Input() countries: CountrySelectorItem[] = [];
   @Input() selectedCountries: string[] = [];
 
   @Output() selectedCountriesChange = new EventEmitter<string[]>();
